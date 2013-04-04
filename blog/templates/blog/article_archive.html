@@ -1,0 +1,13 @@
+<html>
+<body>
+
+<h1>Meu Blog</h1>
+
+{% for article in latest %}
+<h2>{{ article.title }}</h2>
+
+{{ article.content }}
+{% endfor %}
+
+</body>
+</html>
