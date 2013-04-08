@@ -11,6 +11,3 @@ class LatestArticles(Feed):
 
 	def items(self):
 		return Article.objects.all()
-
-	def item_link(self, article):
-		return '/rss/article/%d/' % article.id

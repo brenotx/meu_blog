@@ -1,16 +1,14 @@
-<html>
-<head>
-	<link rel="alternate" type="application/rss+xml" title="Ultimos artigos" href="/rss/latest/" />
-</head>
-<body>
+{% extends "base.html" %}
 
-<h1>Meu Blog</h1>
-
+{% block content %}
 {% for article in latest %}
-<h2>{{ article.title }}</h2>
+	<div class="article">
+		<a href="{% url 'blog.views.article' article_id=article.id %}"<h2>{{ article.title }}</h2></a>
+		<div class="content">
+			Publicado há {{ article.pub_date|timesince }}<br>
+			{{ article.content }}
 
-{{ article.content }}
+		</div>
+	</div>
 {% endfor %}
-
-</body>
-</html>
+{% endblock %}

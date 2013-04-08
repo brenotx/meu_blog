@@ -1,11 +1,7 @@
-<html>
-<body>
+{% extends "base.html" %}
 
-Blog do Breno
+{% block title %}{{ article.title }} - {{ block.super }}{% endblock %}
 
-<h1>{{ article.title }}</h1>
+{% block h1 %}{{ article.title }}{% endblock %}
 
-{{ article.content }}
-
-</body>
-</html>
+{% block content %}{{ article.content }}{% endblock %}

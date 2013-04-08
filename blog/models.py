@@ -9,3 +9,6 @@ class Article(models.Model):
 
 	class Meta:
 		ordering = ('-pub_date',)
+
+	def get_absolute_url(self):
+		return '/rss/article/%d/' % self.id
