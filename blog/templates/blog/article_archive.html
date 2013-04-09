@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<img src="{{ STATIC_URL }}img/foto.jpg" alt="Minha foto" />
 {% for article in latest %}
 	<div class="article">
-		<a href="{% url 'blog.views.article' article_id=article.id %}"<h2>{{ article.title }}</h2></a>
+		<h2><a href="{% url 'blog.views.article' article_id=article.id %}">{{ article.title }}</a></h2>
 		<div class="content">
 			Publicado há {{ article.pub_date|timesince }}<br>
 			{{ article.content }}
