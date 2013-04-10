@@ -16,5 +16,6 @@ urlpatterns = patterns('',
 	url(r'^rss/latest/$', LatestArticles()),
 	url(r'^rss/article/(?P<article_id>\d+)/$', 'blog.views.article'),
 	url(r'^contact/$', 'blog.views.contact'),
+    url(r'^comments/', include('django.contrib.comments.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
