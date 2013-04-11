@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.mail import send_mail
 from django import forms
@@ -6,8 +6,8 @@ from django import forms
 from blog.models import Article
 
 
-def article(request, article_id):
-	article = Article.objects.get(id=article_id)
+def article(request, slugs):
+	article = get_object_or_404(Article, slugs=slugs)
 	return render_to_response('blog/article.html', locals(),
 		context_instance=RequestContext(request))
 
