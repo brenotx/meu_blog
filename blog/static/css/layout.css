@@ -1,23 +1,109 @@
 body {
-	font-family: arial;
-	background-color: green;
-	color:white;
+	font-family: Arial;
+	background-color: #eee;
+	color: #333;
 }
 
 h1 {
-	margin-bottom: 10px;
+	margin: 10px 20px 10px 20px;
 }
 
 h2 {
 	margin: 0;
-	background-color: #eee;
-	padding: 5px;
 	font-size: 1.2em;
 }
 
-.article {
-	border: 1px solid black;
+/* Layout */
+
+#container {
+	position: absolute;
 	background-color: white;
+	width: 760px;
+	margin: 20px 0 20px -390px;
+	left: 50%;
+	border: 10px solid #aaa;
+}
+
+#header {
+	font-size: 3em;
+	margin: 20px;
+}
+
+#header #logo {
+	float: right;
+	background-image: url(/static/img/foto.jpg);
+	background-repeat: no-repeat;
+	background-position: -20px -30px;
+	width: 56px;
+	height: 56px;
+	border: 1px solid #47a;
+}
+
+.content {
+	margin: 20px 20px 0px 20px;
+}
+
+.footer {
+	clear: both;
+	overflow: hidden;
+	background-color: #89a;
+	margin: 20px;
+	font-size: 0.8em;
+	color: white;
+	padding: 10px;
+	text-align: center;
+}
+
+.footer a {
+	color: white;
+}
+
+/* Navagation bar */
+
+#nav-bar {
+	clear: both;
+	overflow: hidden;
+	background-color: #47a;
+	margin-top: 10px;
+	height: 26px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: white;
+}
+
+#nav-bar ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+#nav-bar ul li {
+	float: left;
+	list-style: none;
+	padding: 5px;
+}
+
+#nav-bar ul li a:link, #nav-bar ul li a:visited, #nav-bar ul li a:active {
+	padding: 5px;
+	text-decoration: none;
+	color: white;
+}
+
+#nav-bar ul li a:hover {
+	background-color: #79b;
+	color: white;
+}
+
+/* Blog Article */
+
+.article h2 {
+	text-decoration: underline;
+}
+
+.article {
+	margin: 10px 0px 10px 0px;
+}
+
+.article a {
 	color: black;
 }
 
@@ -25,18 +111,30 @@ h2 {
 	padding: 10px;
 }
 
-.footer {
-	border: 1px solid black;
-	background-color: white;
-	color: gray;
-	margin-top: 10px;
-	padding: 10px;
-}
+/* Forms */
 
 form label {
-    display: block;
+	display: block;
 }
 
 textarea {
-    height: 100px;
+	height: 100px;
+}
+
+th {
+	text-align: right;
+	padding-right: 5px;
+}
+
+/* Comments */
+
+.comments {
+	border-top: 1px solid silver;
+	margin-top: 20px;
+}
+
+.comments hr {
+	border-width: 0px;
+	height: 1px;
+	border-top: 1px solid #add;
 }

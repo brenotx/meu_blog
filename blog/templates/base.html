@@ -1,15 +1,57 @@
+<!DOCTYPE>
 <html>
 <head>
 	<title>{% block title %}Blog do Breno{% endblock %}</title>
+
+	{% block meta %}
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en-US" />
+	<meta name="keywords" content="Python, Django, Breno, Blog" />
+	<meta name="description" content="Blog do Breno" />
+	<meta name="author" content="brenotx@gmail.com" />
+	{% endblock meta %}
+
+	{% block feeds %}
 	<link rel="alternate" type="application/rss+xml" title="Ultimos artigos do Blog" href="/rss/latest/" />
+	{% endblock feeds %}
+
+	{% block style %}
 	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/layout.css">
+	{% endblock style%}
+
+	{% block scripts %}
+	{% endblock scripts %}
 </head>
 
 <body>
-	<h1>{% block h1 %}Blog do Breno {% endblock %}</h1>
+	<div id="container">
+		<div id="header">
+			{% block header %}
+				<div id="logo">&nbsp;</div>
+				Blog do Breno
+			{% endblock header %}
+		</div>
 
-	{% block content %}{% endblock %}
+		<div id="nav-bar">
+			{% block nav-bar %}
+			{% spaceless %}
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="/about-me/">Sobre mim</a></li>
+					<li><a href="{% url 'blog.views.contact' %}">Contato</a></li>
+				</ul>
+			{% endspaceless %}
+			{% endblock nav-bar %}
+		</div>
+		<h1>{% block h1 %}{% endblock %}</h1>
 
-	{% include "blog/footer.html" %}
+		<div class="content">
+			{% block content %}
+			{% endblock content %}
+		</div>
+
+		{% include "blog/footer.html" %}
+
+	</div>
 </body> 
 </html>
