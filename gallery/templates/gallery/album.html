@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ album }} - {{ block.super }}{% endblock %}
+
+{% block h1 %}{{ album }}{% endblock %}
+
+{% block content %}
+<div class="thumbnail">
+    {% for image in image %}
+    <div class="thumbnail">
+        <a href="{{ image.get_absolute_url }}"><img src="{{ image.thumbnail.url }}" />{{ image }}</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

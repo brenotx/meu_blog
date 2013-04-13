@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
 	'south',
 	'blog',
+    'gallery',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

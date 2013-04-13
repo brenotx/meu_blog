@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block titleo %}{{ image }} - {{ block.super }}{% endblock %}
+
+{% block h1 %}{{ image }}{% endblock %}
+
+{% block content %}
+<div class="image">
+    <img src="{{ image.original.url }}"/>
+
+    {{ image.description|linebreaks }}
+
+</div>
+{% endblock content %}
