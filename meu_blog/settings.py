@@ -132,6 +132,7 @@ INSTALLED_APPS = (
 	'south',
 	'blog',
     'gallery',
+    'tags',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
