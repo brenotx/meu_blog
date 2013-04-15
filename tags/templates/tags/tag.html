@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Tag "{{ tag.name }}" - {{ block.super }}{% endblock %}
+
+{% block h1 %}Tag "{{ tag.name }}"{% endblock %}
+
+{% block content %}
+<ul>
+    {% for item in tag.itemtag_set.all %}
+        <li><a href="{{ item.object.get_absolute_url }}">{{ item.object }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock content %}

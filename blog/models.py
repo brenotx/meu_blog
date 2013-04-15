@@ -13,7 +13,10 @@ class Article(models.Model):
         ordering = ('-pub_date',)
 
     def get_absolute_url(self):
-        return reverse('blog.views.article', kwargs={'slugs': self.slugs})    
+        return reverse('blog.views.article', kwargs={'slugs': self.slugs})
+
+    def __unicode(self):
+        return self.title
 
 # SIGNALS
 from django.db.models.signals import pre_save

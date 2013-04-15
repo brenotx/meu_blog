@@ -10,5 +10,9 @@
 
     {{ image.description|linebreaks }}
 
+    {% with image as object %}
+    {% include "tags/tags_for_object.html" %}
+    {% endwith %}
+
 </div>
 {% endblock content %}

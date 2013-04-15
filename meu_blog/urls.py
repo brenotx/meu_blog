@@ -20,5 +20,6 @@ urlpatterns = patterns('',
 	url(r'^contact/$', 'blog.views.contact'),
     url(r'^comments/', include('django.contrib.comments.urls')),
     url(r'^gallery/', include('gallery.urls')),
+    url('^tags/', include('tags.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,7 +7,12 @@
 {% block h1 %}{{ article.title }}{% endblock %}
 
 {% block content %}
+
 {{ article.content }}
+
+{% with article as object %}
+{% include "tags/tags_for_object.html" %}
+{% endwith %}
 
 <div class="comments">
     <h3>Comentários</h3>

@@ -7,7 +7,7 @@ from django.contrib import admin
 from django import forms
 
 from models import Album, Image
-
+from tags import apply_tags, tags_for_object
 
 class AlbumAdmin(admin.ModelAdmin):
     list_display = ('title',)
@@ -16,6 +16,16 @@ class AlbumAdmin(admin.ModelAdmin):
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
+
+    tags = forms.CharField(max_length=30, required=False)		
+
+    def __init__(self, *args, **kwargs):
+        super(ImageForm, self).__init__(*args, **kwargs)
+
+        if self.instance.id:
+            self.initial['tags'] = tags_for_object(
+                self.instance
+            )
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('album', 'title',)
@@ -37,6 +47,8 @@ class ImageAdmin(admin.ModelAdmin):
             miniature.save(obj.thumbnail.path)
 
             obj.save()
+
+        apply_tags(obj, form.cleaned_data['tags'])
 
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Image, ImageAdmin)
