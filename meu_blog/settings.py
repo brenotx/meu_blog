@@ -37,7 +37,7 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-US'
 
 SITE_ID = 1
 
@@ -133,6 +133,7 @@ INSTALLED_APPS = (
 	'blog',
     'gallery',
     'tags',
+    'bills',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
