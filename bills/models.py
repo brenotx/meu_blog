@@ -111,6 +111,13 @@ class BillPay(Bill):
     def payments(self):
         return self.paymentpaid_set.all()
 
+    def trow_payment(self, payment_date, value):
+        return ReceivedPayment.objects.create(
+            bill=self,
+            payment_date=payment_date,
+            value=value,
+        )
+
 class BillReceive(Bill):
     def save(self, *args, **kwargs):
         self.operation = BILL_OPERATION_CREDIT
@@ -121,6 +128,13 @@ class BillReceive(Bill):
 
     def payments(self):
         return self.paymentreceived_set.all()
+
+    def trow_payment(self, payment_date, value):
+        return ReceivedPayment.objects.create(
+            bill=self,
+            payment_date=payment_date,
+            value=value,
+        )
 
 class Payment(models.Model):
     payment_date = models.DateField()

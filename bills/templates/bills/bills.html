@@ -11,10 +11,12 @@
     <li><a href="{{ bill.get_absolute_url }}">{{ bill }}</a></li>
     {% endfor %}
 </ul>
+<a href="{% url 'bills_to_pay' %}">Ver todas</a>
 <h2>Contas a Receber</h2>
 <ul>
     {% for bill in bills_to_receive %}
     <li><a href="{{ bill.get_absolute_url }}">{{ bill }}</a></li>
     {% endfor %}
 </ul>
+<a href="{% url 'bills_to_receive' %}">Ver todas</a>
 {% endblock content %}

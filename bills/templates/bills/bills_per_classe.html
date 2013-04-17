@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - {{ block.super }}{% endblock %}
+{% block h1 %}{{ title }}{% endblock %}
+
+{% block content %}{{ block.super }}
+
+{% regroup pagina.object_list by get_status_display as bills %}
+
+{% for group in bills %}
+<h2>{{ group.grouper }}</h2>
+
+{% for bill in group.list %}
+<div>
+  <a href="{{ bill.get_absolute_url }}">{{ bill }}</a>
+</div>
+{% endfor %}
+{% endfor %}
+<hr>
+<div class="paginacao">
+    Paginas:
+    {% for pagina_numero in paginacao.page_range %}
+    <a href="{{ request.path }}?pagina={{ pagina_numero }}">{{ pagina_numero }}</a>
+    {% endfor %}
+</div>
+{% endblock content %}

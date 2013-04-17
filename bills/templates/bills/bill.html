@@ -14,20 +14,34 @@
     <li>Pagamento: {{ bill.payment_date|date:"d/m/Y" }}</li>
     {% endifequal %}
 </ul>
-    {{ bill.description|linebreaks }}
-    {% if bill.payments.count %}
-    <h2>Pagamentos</h2>
+
+{{ bill.description|linebreaks }}
+
+{% if bill.payments.count %}
+<h2>Pagamentos</h2>
+<table>
+    <tr>
+        <th>Data</th>
+        <th>Valor</th>
+    </tr>
+    {% for payment in bill.payments %}
+    <tr>
+        <td>{{ payment.payment_date|date:"d/m/Y" }}</td>
+        <td>{{ payment.value|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% ifequal bill.status "a"%}
+<hr>
+<h2>Novo pagamento</h2>
+<form action="{{ bill.get_absolute_url }}pay/" method="post">
     <table>
-        <tr>
-            <th>Data</th>
-            <th>Valor</th>
-        </tr>
-        {% for payment in bill.payments %}
-        <tr>
-            <td>{{ payment.payment_date|date:"d/m/Y" }}</td>
-            <td>{{ payment.value|floatformat:2 }}</td>
-        </tr>
-        {% endfor %}
+        {{ payment_form }}
     </table>
-    {% endif %}
+    <input  type="submit" value="Salvar pagamento">
+</form>
+{% endifequal %}
+
 {% endblock content %}
