@@ -1,10 +1,27 @@
 # coding: utf-8
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
+
+class HistoryManager(models.Manager):
+    def get_query_set(self):
+        query_set = super(HistoryManager, self).get_query_set()
+
+        return query_set.extra(
+            select = {
+                '_total_value': """select sum(value * case operation when 'c' then 1 else -1 end) from bills_bill
+                                    where bills_bill.history_id = bills_history.id""",
+            }
+        )
 
 class History(models.Model):
     description = models.CharField(max_length=50)
+
+    objects = HistoryManager()
+
+    def total_value(self):
+        return self._total_value or 0
 
     class Meta:
         ordering = ('description',)
@@ -12,9 +29,30 @@ class History(models.Model):
     def __unicode__(self):
         return self.description
 
+class PersonManager(models.Manager):
+    def get_query_set(self):
+        query_set=super(PersonManager, self).get_query_set()
+
+        return query_set.extra(
+            select = {
+                '_total_value':"""select sum(value * case operation when 'c' then 1 else -1 end) from bills_bill
+                                where bills_bill.person_id = bills_person.id""",
+                '_bills_amount':"""select count(value) from bills_bill
+                                where bills_bill.person_id = bills_person.id""",
+            }
+        )
+
 class Person(models.Model):
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=25, blank=True)
+
+    objects = PersonManager()
+
+    def total_value(self):
+        return self._total_value or 0
+
+    def bills_amount(self):
+        return self._bills_amount or 0
 
     class Meta:
         ordering = ('name',)
@@ -56,15 +94,33 @@ class Bill(models.Model):
     )
     description = models.TextField(blank=True)
 
+    def __unicode__(self):
+       date_of_expiration = self.expiration_date.strftime('%d/%m/%Y')
+       value = '%0.02f' % self.value
+       
+       return '%s - %s (%s)' % (value, self.person.name, date_of_expiration)
+
 class BillPay(Bill):
     def save(self, *args, **kwargs):
         self.operation = BILL_OPERATION_DEBIT
         super(BillPay, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('bill_to_pay', kwargs={'bill_id': self.id})
+
+    def payments(self):
+        return self.paymentpaid_set.all()
+
 class BillReceive(Bill):
     def save(self, *args, **kwargs):
         self.operation = BILL_OPERATION_CREDIT
         super(BillReceive, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('bill_to_receive', kwargs={'bill_id': self.id})
+
+    def payments(self):
+        return self.paymentreceived_set.all()
 
 class Payment(models.Model):
     payment_date = models.DateField()

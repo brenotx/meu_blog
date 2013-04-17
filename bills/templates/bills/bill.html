@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ bill }} - {{ block.super }}{% endblock %}
+{% block h1 %}{{ bill }}{% endblock %}
+
+{% block content %}
+<ul>
+    <li>Valor: {{ bill.value|floatformat:2 }}</li>
+    <li>Vencimento: {{ bill.expiration_date|date:"d/m/Y" }}</li>
+    <li>Pessoa: <a href="{{ bill.person.get_absolute_url }}">{{ bill.person }}</a></li>
+    <li>Histórico: <a href="{{ bill.history.get_absolute_url }}">{{ bill.history }}</a></li>
+    <li>Status: {{ bill.get_status_display }}</li>
+    {% ifequal bill.status "p" %}
+    <li>Pagamento: {{ bill.payment_date|date:"d/m/Y" }}</li>
+    {% endifequal %}
+</ul>
+    {{ bill.description|linebreaks }}
+    {% if bill.payments.count %}
+    <h2>Pagamentos</h2>
+    <table>
+        <tr>
+            <th>Data</th>
+            <th>Valor</th>
+        </tr>
+        {% for payment in bill.payments %}
+        <tr>
+            <td>{{ payment.payment_date|date:"d/m/Y" }}</td>
+            <td>{{ payment.value|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock content %}

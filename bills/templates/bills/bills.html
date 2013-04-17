@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Contas Pessoais - {{ block.super }}{% endblock %}
+
+{% block h1 %}Contas Pessoais{% endblock %}
+
+{% block content %}
+<h2>Contas a Pagar</h2>
+<ul>
+    {% for bill in bills_to_pay %}
+    <li><a href="{{ bill.get_absolute_url }}">{{ bill }}</a></li>
+    {% endfor %}
+</ul>
+<h2>Contas a Receber</h2>
+<ul>
+    {% for bill in bills_to_receive %}
+    <li><a href="{{ bill.get_absolute_url }}">{{ bill }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock content %}
