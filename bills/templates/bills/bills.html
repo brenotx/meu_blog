@@ -12,6 +12,7 @@
     {% endfor %}
 </ul>
 <a href="{% url 'bills_to_pay' %}">Ver todas</a>
+<a href="{% url 'new_bill_to_pay' %}">Criar nova</a>
 <h2>Contas a Receber</h2>
 <ul>
     {% for bill in bills_to_receive %}
@@ -19,4 +20,5 @@
     {% endfor %}
 </ul>
 <a href="{% url 'bills_to_receive' %}">Ver todas</a>
+<a href="{% url 'new_bill_to_receive' %}">Criar nova</a>
 {% endblock content %}

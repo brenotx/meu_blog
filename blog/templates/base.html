@@ -30,6 +30,9 @@
 				<div id="logo">&nbsp;</div>
 				Blog do Breno
 			{% endblock header %}
+{% for msg in messages %}
+<div class="message">{{ msg }}</div>
+{% endfor %}
 		</div>
 
 		<div id="nav-bar">

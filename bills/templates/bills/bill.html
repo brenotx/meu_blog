@@ -4,6 +4,8 @@
 {% block h1 %}{{ bill }}{% endblock %}
 
 {% block content %}
+<a href="edit/">Editar</a>
+<a href="delete/">Deletar</a>
 <ul>
     <li>Valor: {{ bill.value|floatformat:2 }}</li>
     <li>Vencimento: {{ bill.expiration_date|date:"d/m/Y" }}</li>

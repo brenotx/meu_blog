@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 
 class HistoryManager(models.Manager):
@@ -9,14 +10,13 @@ class HistoryManager(models.Manager):
         query_set = super(HistoryManager, self).get_query_set()
 
         return query_set.extra(
-            select = {
-                '_total_value': """select sum(value * case operation when 'c' then 1 else -1 end) from bills_bill
-                                    where bills_bill.history_id = bills_history.id""",
-            }
-        )
+            select={'_total_value': """select sum(value * case operation when 'c' then 1 else -1 end) from bills_bill where
+                                       bills_bill.history_id = bills_history.id""", })
+
 
 class History(models.Model):
     description = models.CharField(max_length=50)
+    user = models.ForeignKey(User)
 
     objects = HistoryManager()
 
@@ -29,22 +29,23 @@ class History(models.Model):
     def __unicode__(self):
         return self.description
 
+
 class PersonManager(models.Manager):
     def get_query_set(self):
-        query_set=super(PersonManager, self).get_query_set()
+        query_set = super(PersonManager, self).get_query_set()
 
         return query_set.extra(
-            select = {
-                '_total_value':"""select sum(value * case operation when 'c' then 1 else -1 end) from bills_bill
+            select={
+                '_total_value': """select sum(value * case operation when 'c' then 1 else -1 end) from bills_bill
                                 where bills_bill.person_id = bills_person.id""",
-                '_bills_amount':"""select count(value) from bills_bill
-                                where bills_bill.person_id = bills_person.id""",
-            }
-        )
+                '_bills_amount': """select count(value) from bills_bill
+                                where bills_bill.person_id = bills_person.id""", })
+
 
 class Person(models.Model):
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=25, blank=True)
+    user = models.ForeignKey(User)
 
     objects = PersonManager()
 
@@ -61,7 +62,7 @@ class Person(models.Model):
         return self.name
 
 BILL_OPERATION_DEBIT = 'd'
-BILL_OPERATION_CREDIT =  'c'
+BILL_OPERATION_CREDIT = 'c'
 BILL_OPERATION_CHOICES = (
     (BILL_OPERATION_DEBIT, _('Debito')),
     (BILL_OPERATION_CREDIT, _('Credito')),
@@ -73,6 +74,7 @@ BILL_STATUS_CHOICES = (
     (BILL_STATUS_PAYABLE, _('A pagar')),
     (BILL_STATUS_PAID, _('Pago')),
 )
+
 
 class Bill(models.Model):
     person = models.ForeignKey('Person')
@@ -93,12 +95,14 @@ class Bill(models.Model):
         blank=True,
     )
     description = models.TextField(blank=True)
+    user = models.ForeignKey(User)
 
     def __unicode__(self):
-       date_of_expiration = self.expiration_date.strftime('%d/%m/%Y')
-       value = '%0.02f' % self.value
-       
-       return '%s - %s (%s)' % (value, self.person.name, date_of_expiration)
+        date_of_expiration = self.expiration_date.strftime('%d/%m/%Y')
+        value = '%0.02f' % self.value
+
+        return '%s - %s (%s)' % (value, self.person.name, date_of_expiration)
+
 
 class BillPay(Bill):
     def save(self, *args, **kwargs):
@@ -112,11 +116,10 @@ class BillPay(Bill):
         return self.paymentpaid_set.all()
 
     def trow_payment(self, payment_date, value):
-        return ReceivedPayment.objects.create(
-            bill=self,
-            payment_date=payment_date,
-            value=value,
-        )
+        return ReceivedPayment.objects.create(bill=self,
+                                              payment_date=payment_date,
+                                              value=value,)
+
 
 class BillReceive(Bill):
     def save(self, *args, **kwargs):
@@ -130,11 +133,10 @@ class BillReceive(Bill):
         return self.paymentreceived_set.all()
 
     def trow_payment(self, payment_date, value):
-        return ReceivedPayment.objects.create(
-            bill=self,
-            payment_date=payment_date,
-            value=value,
-        )
+        return ReceivedPayment.objects.create(bill=self,
+                                              payment_date=payment_date,
+                                              value=value,)
+
 
 class Payment(models.Model):
     payment_date = models.DateField()
@@ -143,8 +145,10 @@ class Payment(models.Model):
     class Meta:
         abstract = True
 
+
 class PaymentPaid(Payment):
     bill = models.ForeignKey('BillPay')
+
 
 class PaymentReceived(Payment):
     bill = models.ForeignKey('BillReceive')

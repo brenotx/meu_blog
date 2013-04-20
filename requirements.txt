@@ -1,5 +1,4 @@
 Django==1.5.1
 Unipath==0.2.1
 South==0.7.6
-python-dev
-PIL
+PIL==1.1.7

@@ -138,3 +138,13 @@ th {
 	height: 1px;
 	border-top: 1px solid #add;
 }
+
+.message {
+    margin: 5px;
+    padding: 5px;
+    background: yellow;
+    border: 3px solid red;
+    font-weight: bold;
+    color: red;
+    font-size: 0.4em;
+}
