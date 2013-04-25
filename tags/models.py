@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericForeignKey
 from django.core.urlresolvers import reverse
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=30, unique=True)
 
@@ -11,6 +12,7 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class ItemTag(models.Model):
     tag = models.ForeignKey('Tag')

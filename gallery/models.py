@@ -16,10 +16,13 @@ class Album(models.Model):
     def get_absolute_url(self):
         return reverse('gallery.views.album', kwargs={'slugs': self.slugs})
 
+
 class Image(models.Model):
-    """Each instance of this class contain an image of gallery, with its
+    """
+    Each instance of this class contain an image of gallery, with its
     repective thumbnail and natural image size. Several imagens may contain
     inside of an Album.
+
     """
 
     album = models.ForeignKey('Album',)

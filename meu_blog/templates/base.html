@@ -44,6 +44,14 @@
                     <li><a href="{% url 'tags.views.tags' %}">Tags</a></li>
 					<li><a href="/about-me/">Sobre mim</a></li>
 					<li><a href="{% url 'blog.views.contact' %}">Contato</a></li>
+					<li><a href="{% url 'bills.views.bills' %}">Contas</a><li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'change_password' %}">Mudar senha</a></li>
+                    <li><a href="{% url 'logout' %}">Sair</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Entrar</a></li>
+                    <li><a href="{% url 'register' %}">Registre-se</a></li>
+                    {% endif %}
 				</ul>
 			{% endspaceless %}
 			{% endblock nav-bar %}

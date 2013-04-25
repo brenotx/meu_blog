@@ -97,6 +97,10 @@ class Bill(models.Model):
     description = models.TextField(blank=True)
     user = models.ForeignKey(User)
 
+    class Meta:
+        ordering = ('-expiration_date', 'value')
+        permissions = (('show_all_users', 'Ver todos os usuarios'),)
+
     def __unicode__(self):
         date_of_expiration = self.expiration_date.strftime('%d/%m/%Y')
         value = '%0.02f' % self.value

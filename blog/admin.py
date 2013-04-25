@@ -17,6 +17,7 @@ class ArticleForm(forms.ModelForm):
         if self.instance.id:
             self.initial['tags'] = tags_for_object(self.instance)
 
+
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleForm
 
