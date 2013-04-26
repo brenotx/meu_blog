@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
-from models import BillPay, BillReceive
-from forms import BillPayForm, BillReceiveForm
+from .models import BillPay, BillReceive
+from .forms import BillPayForm, BillReceiveForm
 
 
 urlpatterns = patterns('bills.views',
